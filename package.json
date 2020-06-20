@@ -1,0 +1,23 @@
+{
+  "name": "websocketGame",
+  "version": "1.0.0",
+  "description": "following this tutorial: https://www.youtube.com/watch?v=cXxEiWudIUY",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanssenstijn/websocketGame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hanssenstijn/websocketGame/issues"
+  },
+  "homepage": "https://github.com/hanssenstijn/websocketGame#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
