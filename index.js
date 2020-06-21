@@ -1,11 +1,16 @@
 const http = require("http");
-const { request } = require("express");
-const websocketServer = require("websocket").server;
-const httpServer = http.createServer();
-httpServer.listen(9090, () => console.log("Listening.. on 9090"));
+const app = require("express")();
 
-// hashmap clients
+app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"))
+app.listen(9091, () => console.log("Listening on http port 9091"))
+
+const websocketServer = require("websocket").server
+const httpServer = http.createServer();
+httpServer.listen(9090, () => console.log("Listening.. on 9090"))
+
+//hashmap clients
 const clients = {};
+const games = {};
 
 const wsServer = new websocketServer({
   "httpServer": httpServer
@@ -19,7 +24,25 @@ wsServer.on("request", request => {
   connection.on("message", message => {
     const result = JSON.parse(message.utf8Data)
     // I have recieved a message from the client
-    console.log(result)
+    // a user want to create a new game
+    if (result.method === "create") {
+      const clientId = result.clientId;
+      const gameId = guid();
+      games[gameId] = {
+        "id": gameId,
+        "balls": 20
+      }
+
+
+      const payLoad = {
+        "method": "create",
+        "clientId": games[gameId]
+      }
+
+      const con = clients[clientId].connection;
+      con.send(JSON.stringify(payLoad));
+
+    }
   });
 
   // generate a new clientId
